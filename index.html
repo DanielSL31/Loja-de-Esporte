@@ -326,5 +326,54 @@ $('cartBackdrop').addEventListener('click',e=>{const b=e.target.closest('[data-i
 document.addEventListener('click',e=>{const location=e.target.closest('.product .location');if(!location)return;const card=location.closest('.product');if(!card)return;card.style.outline='3px solid #e8ff24';setTimeout(()=>card.style.outline='',2300)});
 filter();
 })();
+</script>  
+<style>
+#sportiq-map{margin:24px auto;padding:20px;background:#111820;border:1px solid #293640;border-radius:18px;color:#fff;max-width:1100px}
+#sportiq-map h2{margin:0 0 6px;color:#e8ff24}
+#sportiq-map p{color:#aab5bd;margin:0 0 18px}
+.sq-map-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sq-zone{min-height:105px;border:1px solid #34434c;border-radius:13px;background:#1b2730;color:#fff;padding:12px;text-align:center;font-size:15px;cursor:pointer}
+.sq-zone strong{display:block;font-size:27px;margin-bottom:7px}
+.sq-zone small{color:#b6c1c8}
+.sq-zone:active,.sq-zone:hover{background:#293b31;border-color:#e8ff24}
+.sq-entrance{margin-top:13px;padding:12px;text-align:center;border:1px dashed #718078;border-radius:10px;color:#e8ff24}
+@media(max-width:500px){.sq-map-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+
+<section id="sportiq-map">
+  <h2>SPORTIQ SMART MARKET</h2>
+  <p>Explore os setores e encontre seus produtos pelo mapa da loja.</p>
+  <div class="sq-map-grid">
+    <button class="sq-zone" data-sq="Futebol"><strong>⚽</strong>Futebol<small>Setor A</small></button>
+    <button class="sq-zone" data-sq="Corrida"><strong>🏃</strong>Corrida<small>Setor B</small></button>
+    <button class="sq-zone" data-sq="Natação"><strong>🏊</strong>Natação<small>Setor C</small></button>
+    <button class="sq-zone" data-sq="Musculação"><strong>🏋️</strong>Musculação<small>Setor D</small></button>
+    <button class="sq-zone" data-sq="Lutas"><strong>🥊</strong>Lutas<small>Setor E</small></button>
+    <button class="sq-zone" data-sq="Vôlei"><strong>🏐</strong>Vôlei<small>Setor F</small></button>
+  </div>
+  <div class="sq-entrance">➜ ENTRADA DA LOJA · ESCOLHA UM SETOR</div>
+</section>
+
+<script>
+(function(){
+  const map=document.getElementById('sportiq-map');
+  const categories=document.getElementById('categories');
+  if(!map||!categories)return;
+  categories.insertAdjacentElement('afterend',map);
+  map.querySelectorAll('[data-sq]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const name=btn.dataset.sq;
+      const target=[...document.querySelectorAll('#categories [data-category]')]
+        .find(item=>item.dataset.category===name);
+      if(target){
+        target.click();
+        document.getElementById('shelves')?.scrollIntoView({
+          behavior:'smooth',block:'start'
+        });
+      }
+    });
+  });
+})();
 </script>
+
 </body></html>
